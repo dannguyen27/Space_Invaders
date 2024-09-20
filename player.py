@@ -6,7 +6,7 @@ LEFT_BOUNDARY = -215  # Adjusted for 500px width screen
 RIGHT_BOUNDARY = 215  # Adjusted for 500px width screen
 
 
-custom_player_gif = "ship.gif"
+custom_player_gif = "images/resized_ship.gif"
 
 class Player(Turtle):
 

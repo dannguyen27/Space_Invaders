@@ -1,13 +1,17 @@
-from turtle import Turtle
+from turtle import Turtle, Screen
 
 STARTING_MOVE_DISTANCE = 3
 MOVE_INCREMENT = 0.75
 STARTING_ENEMY_AMOUNT_ROW = 2
 STARTING_ENEMY_AMOUNT_COLUMN = 4
 ENEMY_INCREASE = 1
+custom_enemy_gif = "images/resized_enemy_ship.gif"
 
 class EnemyManager:
     def __init__(self):
+        self.screen = Screen()
+        self.screen.addshape(custom_enemy_gif)  # Register the custom enemy shape
+
         self.all_enemies = []
         self.enemy_speed = STARTING_MOVE_DISTANCE
         self.level = 1  # Initialize level
@@ -25,13 +29,11 @@ class EnemyManager:
         spacing_x = 50
         spacing_y = 40
 
-
         for row in range(rows):  
             for col in range(columns):  
-                new_enemy = Turtle("turtle")
-                new_enemy.seth(270)
+                new_enemy = Turtle()
+                new_enemy.shape(custom_enemy_gif)  # Use the custom enemy ship shape
                 new_enemy.penup()
-                new_enemy.color("red")
                 new_enemy.goto(start_x + col * spacing_x, start_y - row * spacing_y)
                 self.all_enemies.append(new_enemy)
 

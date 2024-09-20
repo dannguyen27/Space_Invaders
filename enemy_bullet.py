@@ -1,8 +1,10 @@
-from turtle import Turtle
+from turtle import Turtle, Screen
 import random
 
 BULLET_MOVE_DISTANCE = 15
 FIRE_DELAY_LEVELUP = 5 
+
+custom_enemy_bullet = "images/resized_enemy_laser.gif"
 
 class EnemyBullet:
 
@@ -13,6 +15,9 @@ class EnemyBullet:
         self.player = player
         self.counter = 0
         self.fire_delay = 30
+        # Register the custom bullet shape
+        self.screen = Screen()
+        self.screen.register_shape(custom_enemy_bullet)
 
     def create_bullet(self):
         if self.enemy_manager.all_enemies:  # Ensure there are enemies to choose from
@@ -21,8 +26,7 @@ class EnemyBullet:
             ycord = rnd_enemy.ycor()
             
             # Create the bullet at the enemy's position
-            new_bullet = Turtle("square")
-            new_bullet.shapesize(stretch_wid=0.1, stretch_len=1)  # Thin bullet
+            new_bullet = Turtle(custom_enemy_bullet)# Thin bullet
             new_bullet.penup()
             new_bullet.goto(xcord, ycord)  # Immediately set the bullet's starting position
             new_bullet.color("red")

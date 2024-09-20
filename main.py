@@ -7,7 +7,7 @@ from player_bullet import PlayerBullet
 from score import Scoreboard
 from blockade import Blockade
 
-custom_background = "background.gif"
+custom_background = "images/background.gif"
 class Game:
     def __init__(self):
         # Initialization code
@@ -25,7 +25,6 @@ class Game:
 
         self.blockades = self.create_blockades()
         self.setup_controls()
-
         # Update the screen once after everything is initialized
         self.screen.update()
 
@@ -89,7 +88,12 @@ class Game:
                     block.hit()
                     bullet.hideturtle()
                     self.enemy_bullet_manager.all_bullets.remove(bullet)
+                    
+                    if block.durability <= 0:  # Check if the block is destroyed
+                        self.blockades.remove(block)
+                        block.hideturtle()  # Ensure the block is hidden when removed
                     break
+
 
         for player_bullet in self.player_bullet_manager.all_bullets:
             for block in self.blockades:
