@@ -20,10 +20,11 @@ class EnemyManager:
         self.all_enemies.clear()
         
         """Create a grid of enemies"""
-        start_x = -200
-        start_y = 250
+        start_x = -150  # Adjusted for smaller screen
+        start_y = 200   # Adjusted for smaller screen
         spacing_x = 50
         spacing_y = 40
+
 
         for row in range(rows):  
             for col in range(columns):  
@@ -42,7 +43,7 @@ class EnemyManager:
             enemy.setx(new_x)
 
         # Check if any enemy has reached the edge of the screen
-        if any(enemy.xcor() > 360 or enemy.xcor() < -360 for enemy in self.all_enemies):
+        if any(enemy.xcor() > 215 or enemy.xcor() < -215 for enemy in self.all_enemies):
             self.enemy_speed *= -1  # Reverse direction
             self.move_down()
 

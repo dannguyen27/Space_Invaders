@@ -2,8 +2,9 @@ from turtle import Turtle, Screen
 
 STARTING_POSITION = (0, -280)
 MOVE_DISTANCE = 10
-LEFT_BOUNDARY = -380
-RIGHT_BOUNDARY = 380
+LEFT_BOUNDARY = -215  # Adjusted for 500px width screen
+RIGHT_BOUNDARY = 215  # Adjusted for 500px width screen
+
 
 custom_player_gif = "ship.gif"
 

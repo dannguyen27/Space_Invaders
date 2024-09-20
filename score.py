@@ -8,10 +8,11 @@ class Scoreboard(Turtle):
         super().__init__()  # Initialize Turtle
         self.score = 0  # Start with 0 score
         self.level = 1
+        self.lives = 3
         self.color("white")
         self.hideturtle()
         self.penup()
-        self.goto(-390, 270)
+        self.goto(-240, 270)  # Adjusted for new screen dimensions
         self.update_scoreboard()
         
 
@@ -38,8 +39,12 @@ class Scoreboard(Turtle):
 
     def update_scoreboard(self):
         self.clear()
-        self.goto(-390, 270)  # Reset position for scoreboard
+        self.goto(-240, 270)  # Reset position for scoreboard
         self.write(f"Score: {self.score}", align="left", font=FONT)
-        self.goto(-390, 240)  # Adjust vertical position for level
+        self.goto(-240, 245)  # Adjust vertical position for level
         self.write(f"Level: {self.level}", align="left", font=FONT)
+        self.goto(-240, 220)  # Adjust vertical position for level
+        self.write(f"Lives {self.lives}", align="left", font=FONT)
 
+    def lose_life(self):
+        self.lives -=1

@@ -7,13 +7,15 @@ from player_bullet import PlayerBullet
 from score import Scoreboard
 from blockade import Blockade
 
+custom_background = "background.gif"
 class Game:
     def __init__(self):
         # Initialization code
         self.screen = Screen()
-        self.screen.setup(width=800, height=600)
+        self.screen.setup(width=500, height=600)
         self.screen.bgcolor("black")
         self.screen.tracer(0)
+        self.screen.bgpic(custom_background) 
 
         self.player = Player()
         self.enemy_manager = EnemyManager()
@@ -28,8 +30,9 @@ class Game:
         self.screen.update()
 
     def create_blockades(self):
-        positions = [(-200, -150), (0, -150), (200, -150), (-100, -200), (100, -200), (-300, -200), (300, -200)]
+        positions = [(-150, -150), (0, -150), (150, -150), (-75, -200), (75, -200)]
         return [Blockade(position) for position in positions]
+
 
     def setup_controls(self):
         self.screen.listen()
@@ -48,11 +51,36 @@ class Game:
                     self.scoreboard.increase_score()
                     break
 
+    def player_hit(self):
+            self.screen.bgcolor("red")  # Change the screen color to red
+            self.screen.update()
+            time.sleep(0.1)  # Pause for 0.1 seconds to show the red flash
+            self.screen.bgcolor("black") 
+        
+
+
+    def check_for_bullet_on_bullet_collision(self):
+        for bullet in self.player_bullet_manager.all_bullets:
+            for enemy_bullet in self.enemy_bullet_manager.all_bullets:
+                if bullet.distance(enemy_bullet) <10:
+                    enemy_bullet.hideturtle()
+                    bullet.hideturtle()
+                    self.player_bullet_manager.all_bullets.remove(bullet)
+                    self.enemy_bullet_manager.all_bullets.remove(enemy_bullet)
+
+
     def check_enemy_bullet_collisions(self):
         for bullet in self.enemy_bullet_manager.all_bullets:
             if bullet.distance(self.player) < 20:
-                self.scoreboard.game_over()
-                return True  # Indicate that the game is over
+                self.scoreboard.lose_life()
+                self.player_hit()
+                self.scoreboard.update_scoreboard()
+                bullet.hideturtle()
+                self.enemy_bullet_manager.all_bullets.remove(bullet)
+                if self.scoreboard.lives == 0:  # Check if lives are 0
+                    self.scoreboard.game_over()
+                    return True  # Indicate that the game is over
+
 
     def check_blockade_collisions(self):
         for bullet in self.enemy_bullet_manager.all_bullets:
@@ -69,6 +97,8 @@ class Game:
                     player_bullet.hideturtle()
                     self.player_bullet_manager.all_bullets.remove(player_bullet)
                     break
+                
+    
     def game_over(self):
         # Display "Game Over"
         self.scoreboard.game_over()
@@ -126,6 +156,7 @@ class Game:
 
             self.check_player_bullet_collisions()
             self.check_blockade_collisions()
+            self.check_for_bullet_on_bullet_collision()
 
             time.sleep(0.1)  # Adjust as necessary for game speed
 
