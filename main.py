@@ -140,6 +140,17 @@ class Game:
         self.__init__()  # Reinitialize the game
         self.main_loop()  # Restart the main game loop
 
+    def clear_bullets(self):
+    # Hide and remove all enemy bullets
+        for bullet in self.enemy_bullet_manager.all_bullets:
+            bullet.hideturtle()
+        self.enemy_bullet_manager.all_bullets.clear()
+
+        # Hide and remove all player bullets
+        for bullet in self.player_bullet_manager.all_bullets:
+            bullet.hideturtle()
+        self.player_bullet_manager.all_bullets.clear()
+
 
     def main_loop(self):
         game_is_on = True
@@ -152,7 +163,9 @@ class Game:
             if not self.enemy_manager.all_enemies:
                 self.enemy_manager.level_up()
                 self.enemy_bullet_manager.level_up()
+                self.clear_bullets()
                 self.scoreboard.level_up()
+                
 
             if self.check_enemy_bullet_collisions():  # Check if the game is over
                 game_is_on = False

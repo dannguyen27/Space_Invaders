@@ -30,11 +30,15 @@ class Scoreboard(Turtle):
 
 
     def level_up(self):
+        self.clear()
         self.level += 1
         self.goto(0, 0)
         time.sleep(1)
-        self.clear()
         self.write("LEVEL UP", align="center", font=FONT)
+        self.getscreen().update()
+        time.sleep(1)
+
+        self.clear()
         self.update_scoreboard()
 
     def update_scoreboard(self):

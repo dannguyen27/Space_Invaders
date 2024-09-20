@@ -1,10 +1,20 @@
 from turtle import Turtle, Screen
 
-STARTING_MOVE_DISTANCE = 3
-MOVE_INCREMENT = 0.75
+# Initial speed of enemy movement; higher values make enemies move faster.
+STARTING_MOVE_DISTANCE = 4
+
+# Amount by which the enemy speed increases with each level-up.
+MOVE_INCREMENT = 2
+
+# Initial number of rows of enemies.
 STARTING_ENEMY_AMOUNT_ROW = 2
+
+# Initial number of columns of enemies.
 STARTING_ENEMY_AMOUNT_COLUMN = 4
-ENEMY_INCREASE = 1
+
+# Number of rows and columns to add to the enemy grid with each level-up.
+ENEMY_INCREASE = 2
+
 custom_enemy_gif = "images/resized_enemy_ship.gif"
 
 class EnemyManager:
@@ -24,8 +34,8 @@ class EnemyManager:
         self.all_enemies.clear()
         
         """Create a grid of enemies"""
-        start_x = -150  # Adjusted for smaller screen
-        start_y = 200   # Adjusted for smaller screen
+        start_x = -150  
+        start_y = 200   
         spacing_x = 50
         spacing_y = 40
 
@@ -56,7 +66,8 @@ class EnemyManager:
             enemy.sety(new_y)
 
     def level_up(self):
-        self.enemy_speed += MOVE_INCREMENT
+        """Increase the difficulty by speeding up enemies and adding more rows/columns"""
+        self.enemy_speed += MOVE_INCREMENT  # Increase speed
         self.level += 1  # Increment the level
         rows = STARTING_ENEMY_AMOUNT_ROW + ENEMY_INCREASE * (self.level - 1)  # Adjust number of rows
         columns = STARTING_ENEMY_AMOUNT_COLUMN + ENEMY_INCREASE * (self.level - 1)  # Adjust number of columns
