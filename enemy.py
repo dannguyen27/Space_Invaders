@@ -1,31 +1,34 @@
-# TODO: Define Enemy class
-# TODO: Initialize enemy attributes like position, speed, and shape
-# TODO: Create a method to move enemies left to right and down
-# TODO: Implement logic to handle collision with player bullets
-# TODO: Add enemy respawn or destruction logic
-
 from turtle import Turtle
 
-STARTING_MOVE_DISTANCE = 5
-MOVE_INCREMENT = 10
+STARTING_MOVE_DISTANCE = 3
+MOVE_INCREMENT = 0.75
+STARTING_ENEMY_AMOUNT_ROW = 2
+STARTING_ENEMY_AMOUNT_COLUMN = 4
+ENEMY_INCREASE = 1
 
 class EnemyManager:
     def __init__(self):
         self.all_enemies = []
         self.enemy_speed = STARTING_MOVE_DISTANCE
-        self.create_enemies()
+        self.level = 1  # Initialize level
+        self.create_enemies(STARTING_ENEMY_AMOUNT_ROW, STARTING_ENEMY_AMOUNT_COLUMN)
 
-    def create_enemies(self):
+    def create_enemies(self, rows, columns):
+        # Clear existing enemies
+        for enemy in self.all_enemies:
+            enemy.hideturtle()
+        self.all_enemies.clear()
+        
         """Create a grid of enemies"""
         start_x = -200
         start_y = 250
         spacing_x = 50
         spacing_y = 40
 
-        for row in range(5):  # 5 rows
-            for col in range(11):  # 11 columns
-                new_enemy = Turtle("square")
-                new_enemy.shapesize(stretch_wid=1, stretch_len=2)
+        for row in range(rows):  
+            for col in range(columns):  
+                new_enemy = Turtle("turtle")
+                new_enemy.seth(270)
                 new_enemy.penup()
                 new_enemy.color("red")
                 new_enemy.goto(start_x + col * spacing_x, start_y - row * spacing_y)
@@ -39,7 +42,7 @@ class EnemyManager:
             enemy.setx(new_x)
 
         # Check if any enemy has reached the edge of the screen
-        if any(enemy.xcor() > 280 or enemy.xcor() < -280 for enemy in self.all_enemies):
+        if any(enemy.xcor() > 360 or enemy.xcor() < -360 for enemy in self.all_enemies):
             self.enemy_speed *= -1  # Reverse direction
             self.move_down()
 
@@ -48,3 +51,10 @@ class EnemyManager:
         for enemy in self.all_enemies:
             new_y = enemy.ycor() - MOVE_INCREMENT
             enemy.sety(new_y)
+
+    def level_up(self):
+        self.enemy_speed += MOVE_INCREMENT
+        self.level += 1  # Increment the level
+        rows = STARTING_ENEMY_AMOUNT_ROW + ENEMY_INCREASE * (self.level - 1)  # Adjust number of rows
+        columns = STARTING_ENEMY_AMOUNT_COLUMN + ENEMY_INCREASE * (self.level - 1)  # Adjust number of columns
+        self.create_enemies(rows, columns)  # Create new enemies with updated row/column values
