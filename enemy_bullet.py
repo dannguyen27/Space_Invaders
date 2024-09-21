@@ -1,11 +1,15 @@
 from turtle import Turtle, Screen
 import random
 
+#Bullet Speed
 BULLET_MOVE_DISTANCE = 15
+
+#Bullet Speed Increase Per Level Up
 FIRE_DELAY_LEVELUP = 5 
 
 custom_enemy_bullet = "images/resized_enemy_laser.gif"
 custom_level4_laser = "images/level4_laser.gif"
+custom_level5_laser = "images/level5_laser.gif"
 
 class EnemyBullet:
 
@@ -21,6 +25,7 @@ class EnemyBullet:
         self.screen = Screen()
         self.screen.register_shape(custom_enemy_bullet)
         self.screen.register_shape(custom_level4_laser)
+        self.screen.register_shape(custom_level5_laser)
 
     def create_bullet(self):
         if self.enemy_manager.all_enemies:  # Ensure there are enemies to choose from
@@ -29,6 +34,9 @@ class EnemyBullet:
         if self.enemy_manager.level_4_enemies:  # Ensure there are level 4 enemies to choose from
             rnd_level_4_enemy = random.choice(self.enemy_manager.level_4_enemies)
             self._create_bullet_from_enemy(rnd_level_4_enemy, custom_level4_laser)
+        if self.enemy_manager.level_5_enemies:  # Ensure there are level 4 enemies to choose from
+            rnd_level_5_enemy = random.choice(self.enemy_manager.level_5_enemies)
+            self._create_bullet_from_enemy(rnd_level_5_enemy, custom_level5_laser)
 
     def _create_bullet_from_enemy(self, enemy, bullet_shape):
         xcord = enemy.xcor()

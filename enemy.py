@@ -7,10 +7,10 @@ STARTING_MOVE_DISTANCE = 4
 MOVE_INCREMENT = 2
 
 # Initial number of rows of enemies.
-STARTING_ENEMY_AMOUNT_ROW = 2
+STARTING_ENEMY_AMOUNT_ROW = 1
 
 # Initial number of columns of enemies.
-STARTING_ENEMY_AMOUNT_COLUMN = 2
+STARTING_ENEMY_AMOUNT_COLUMN = 1
 
 # Number of rows and columns to add to the enemy grid with each level-up.
 ENEMY_INCREASE = 1
@@ -21,19 +21,25 @@ LEVEL_4_ENEMY_SPEED = 6
 LEVEL_4_SPACING_X = 125
 LEVEL_4_SPACING_Y = 50
 
+LEVEL_5_ENEMY_SPEED = 20
+
 custom_enemy_gif = "images/resized_enemy_ship.gif"
+LEVEL_5_ENEMY_GIF = "images/level5_ship.gif"
 
 class EnemyManager:
     def __init__(self):
         self.screen = Screen()
         self.screen.addshape(custom_enemy_gif)  # Register the custom enemy shape
         self.screen.addshape(LEVEL_4_ENEMY_GIF)  # Register the level 4 enemy shape
+        self.screen.addshape(LEVEL_5_ENEMY_GIF)  # Register the level 4 enemy shape
 
         self.all_enemies = []
         self.level_4_enemies = []  # List to hold level 4 specific enemies
         self.enemy_speed = STARTING_MOVE_DISTANCE
         self.level_4_enemy_speed = LEVEL_4_ENEMY_SPEED  # Separate speed for level 4 enemies
         self.level = 1  # Initialize level
+        self.level_5_enemies = []  # List to hold level 4 specific enemies
+        self.level_5_enemy_speed = LEVEL_5_ENEMY_SPEED  # Separate speed for level 4 enemies
         self.create_enemies(STARTING_ENEMY_AMOUNT_ROW, STARTING_ENEMY_AMOUNT_COLUMN)
 
     def create_enemies(self, rows, columns):
@@ -57,7 +63,17 @@ class EnemyManager:
                 new_enemy.goto(start_x + col * spacing_x, start_y - row * spacing_y)
                 self.all_enemies.append(new_enemy)
 
-        if self.level == 4:
+
+        if self.level == 2:
+            new_level_5_enemy = Turtle()
+            new_level_5_enemy.shape(LEVEL_5_ENEMY_GIF)  # Use the level 5 enemy ship shape
+            new_level_5_enemy.penup()
+            new_level_5_enemy.goto(0,40)
+            self.level_5_enemies.append(new_level_5_enemy) 
+            
+            
+            
+        if self.level > 1:
             # Create level 4 specific enemies behind the default enemies
             level_4_start_x = -150  
             level_4_start_y = start_y + 100
@@ -81,10 +97,15 @@ class EnemyManager:
             new_x = enemy.xcor() + self.level_4_enemy_speed
             enemy.setx(new_x)
 
+        for enemy in self.level_5_enemies:
+            new_x = enemy.xcor() + self.level_5_enemy_speed
+            enemy.setx(new_x)
+
         # Check if any enemy has reached the edge of the screen and reverse direction
-        if any(enemy.xcor() > 215 or enemy.xcor() < -215 for enemy in self.all_enemies + self.level_4_enemies):
+        if any(enemy.xcor() > 215 or enemy.xcor() < -215 for enemy in self.all_enemies + self.level_4_enemies + self.level_5_enemies):
             self.enemy_speed *= -1  # Reverse direction for default enemies
             self.level_4_enemy_speed *= -1  # Reverse direction for level 4 enemies
+            self.level_5_enemy_speed *= -1  # Reverse direction for level 5 enemies
             self.move_down()
 
     def move_down(self):

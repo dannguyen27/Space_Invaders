@@ -49,7 +49,7 @@ class Game:
                     self.player_bullet_manager.all_bullets.remove(bullet)
                     self.scoreboard.increase_score()
                     break
-                
+
             # Check collisions with level 4 enemies
             for enemy in self.enemy_manager.level_4_enemies:
                 if bullet.distance(enemy) < 20:
@@ -90,7 +90,7 @@ class Game:
                     self.scoreboard.game_over()
                     return True  # Indicate that the game is over
 
-
+  
     def check_blockade_collisions(self):
         for bullet in self.enemy_bullet_manager.all_bullets:
             for block in self.blockades:
