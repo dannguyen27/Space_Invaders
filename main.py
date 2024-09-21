@@ -135,8 +135,12 @@ class Game:
     
     def game_over(self):
         # Display "Game Over"
+        self.scoreboard.final_score()
         self.scoreboard.game_over()
+        self.screen.update()
+        time.sleep(2) # 2 Seconds to display Final Score
         self.screen.update()  # Ensure the "Game Over" message is shown
+        time.sleep(1)
         
         # Remove all objects from the screen
         for enemy in self.enemy_manager.all_enemies:
