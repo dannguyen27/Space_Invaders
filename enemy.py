@@ -7,10 +7,10 @@ STARTING_MOVE_DISTANCE = 4
 MOVE_INCREMENT = 2
 
 # Initial number of rows of enemies.
-STARTING_ENEMY_AMOUNT_ROW = 1
+STARTING_ENEMY_AMOUNT_ROW = 2
 
 # Initial number of columns of enemies.
-STARTING_ENEMY_AMOUNT_COLUMN = 1
+STARTING_ENEMY_AMOUNT_COLUMN = 2
 
 # Number of rows and columns to add to the enemy grid with each level-up.
 ENEMY_INCREASE = 1
