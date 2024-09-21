@@ -7,10 +7,10 @@ STARTING_MOVE_DISTANCE = 4
 MOVE_INCREMENT = 2
 
 # Initial number of rows of enemies.
-STARTING_ENEMY_AMOUNT_ROW = 1
+STARTING_ENEMY_AMOUNT_ROW = 2
 
 # Initial number of columns of enemies.
-STARTING_ENEMY_AMOUNT_COLUMN = 1
+STARTING_ENEMY_AMOUNT_COLUMN = 2
 
 # Number of rows and columns to add to the enemy grid with each level-up.
 ENEMY_INCREASE = 1
@@ -64,7 +64,7 @@ class EnemyManager:
                 self.all_enemies.append(new_enemy)
 
 
-        if self.level == 2:
+        if self.level == 5:
             new_level_5_enemy = Turtle()
             new_level_5_enemy.shape(LEVEL_5_ENEMY_GIF)  # Use the level 5 enemy ship shape
             new_level_5_enemy.penup()
@@ -73,7 +73,7 @@ class EnemyManager:
             
             
             
-        if self.level > 1:
+        if self.level > 3:
             # Create level 4 specific enemies behind the default enemies
             level_4_start_x = -150  
             level_4_start_y = start_y + 100

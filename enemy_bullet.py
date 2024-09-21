@@ -28,15 +28,18 @@ class EnemyBullet:
         self.screen.register_shape(custom_level5_laser)
 
     def create_bullet(self):
-        if self.enemy_manager.all_enemies:  # Ensure there are enemies to choose from
+        if self.enemy_manager.all_enemies and random.random() < 0.9:  # 50% chance for default enemies to shoot
             rnd_enemy = random.choice(self.enemy_manager.all_enemies)
             self._create_bullet_from_enemy(rnd_enemy, custom_enemy_bullet)
-        if self.enemy_manager.level_4_enemies:  # Ensure there are level 4 enemies to choose from
+        
+        if self.enemy_manager.level_4_enemies and random.random() < 0.8:  # 50% chance for level 4 enemies to shoot
             rnd_level_4_enemy = random.choice(self.enemy_manager.level_4_enemies)
             self._create_bullet_from_enemy(rnd_level_4_enemy, custom_level4_laser)
-        if self.enemy_manager.level_5_enemies:  # Ensure there are level 4 enemies to choose from
+        
+        if self.enemy_manager.level_5_enemies and random.random() < 0.7:  # 50% chance for level 5 enemies to shoot
             rnd_level_5_enemy = random.choice(self.enemy_manager.level_5_enemies)
             self._create_bullet_from_enemy(rnd_level_5_enemy, custom_level5_laser)
+
 
     def _create_bullet_from_enemy(self, enemy, bullet_shape):
         xcord = enemy.xcor()
