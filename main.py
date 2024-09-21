@@ -49,6 +49,16 @@ class Game:
                     self.player_bullet_manager.all_bullets.remove(bullet)
                     self.scoreboard.increase_score()
                     break
+                
+            # Check collisions with level 4 enemies
+            for enemy in self.enemy_manager.level_4_enemies:
+                if bullet.distance(enemy) < 20:
+                    enemy.hideturtle()
+                    self.enemy_manager.level_4_enemies.remove(enemy)
+                    bullet.hideturtle()
+                    self.player_bullet_manager.all_bullets.remove(bullet)
+                    self.scoreboard.increase_score()
+                    break  # Exit inner loop after a hit
 
     def player_hit(self):
             self.screen.bgcolor("red")  # Change the screen color to red
@@ -61,7 +71,7 @@ class Game:
     def check_for_bullet_on_bullet_collision(self):
         for bullet in self.player_bullet_manager.all_bullets:
             for enemy_bullet in self.enemy_bullet_manager.all_bullets:
-                if bullet.distance(enemy_bullet) <10:
+                if bullet.distance(enemy_bullet) <13:
                     enemy_bullet.hideturtle()
                     bullet.hideturtle()
                     self.player_bullet_manager.all_bullets.remove(bullet)

@@ -3,7 +3,7 @@ import time
 
 custom_player_bullet = "images/resized_player_laser.gif"
 
-BULLET_MOVE_DISTANCE = 15
+BULLET_MOVE_DISTANCE = 20
 
 class PlayerBullet:
 
