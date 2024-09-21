@@ -1,8 +1,11 @@
 from PIL import Image
 
-# Load and resize the image
-image = Image.open("enemy_laser.gif")
-resized_image = image.resize((15, 15), Image.Resampling.LANCZOS)
-resized_image.save("resized_enemy_laser.gif")
+# Load the image
+image_path = "images/background4.gif"
+image = Image.open(image_path)
 
-print("Image resized successfully.")
+# Resize the image to fit the screen dimensions (500x600)
+resized_image = image.resize((500, 600), Image.LANCZOS)
+
+# Save the resized image as PNG
+resized_image.save("background_level4.gif", format="PNG")

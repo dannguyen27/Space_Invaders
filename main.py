@@ -7,7 +7,7 @@ from player_bullet import PlayerBullet
 from score import Scoreboard
 from blockade import Blockade
 
-custom_background = "images/background.gif"
+
 class Game:
     def __init__(self):
         # Initialization code
@@ -15,7 +15,16 @@ class Game:
         self.screen.setup(width=500, height=600)
         self.screen.bgcolor("black")
         self.screen.tracer(0)
-        self.screen.bgpic(custom_background) 
+        self.background = [
+            "images/background_level1.gif",
+            "images/background_level2.gif",
+            "images/background_level3.gif",
+            "images/background_level4.gif",
+
+        ]
+        self.screen.bgpic(self.background[0])
+        self.level = 1
+        self.set_background(self.level - 1) 
 
         self.player = Player()
         self.enemy_manager = EnemyManager()
@@ -27,6 +36,17 @@ class Game:
         self.setup_controls()
         # Update the screen once after everything is initialized
         self.screen.update()
+
+    def set_background(self, level_index):
+        """Set the background image based on the level index."""
+        self.screen.bgpic(self.background[level_index])
+
+    def level_up(self):
+        """Handle level-up logic."""
+        self.level += 1
+        if self.level <= len(self.background):
+            self.set_background(self.level - 1) 
+
 
     def create_blockades(self):
         positions = [(-150, -150), (0, -150), (150, -150), (-75, -200), (75, -200)]
@@ -175,6 +195,7 @@ class Game:
                 self.enemy_bullet_manager.level_up()
                 self.clear_bullets()
                 self.scoreboard.level_up()
+                self.level_up()
                 
 
             if self.check_enemy_bullet_collisions():  # Check if the game is over
