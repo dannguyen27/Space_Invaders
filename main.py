@@ -6,6 +6,7 @@ import time
 from player_bullet import PlayerBullet
 from score import Scoreboard
 from blockade import Blockade
+from powerup import PowerUpManager
 
 
 class Game:
@@ -31,6 +32,7 @@ class Game:
         self.enemy_bullet_manager = EnemyBullet(self.enemy_manager, self.player)
         self.player_bullet_manager = PlayerBullet(self.player)
         self.scoreboard = Scoreboard()
+        self.powerup = PowerUpManager()
 
         self.blockades = self.create_blockades()
         self.setup_controls()
@@ -131,8 +133,14 @@ class Game:
                     player_bullet.hideturtle()
                     self.player_bullet_manager.all_bullets.remove(player_bullet)
                     break
-                
-    
+
+    def spawning_removing_powerups(self):
+        self.powerup.spawn()
+        for powerup in self.powerup.all_powerups:
+            if self.player.distance(powerup) < 14:
+                self.powerup.remove()
+                self.player_bullet_manager.speed_powerup()
+       
     def game_over(self):
         # Display "Game Over"
         self.scoreboard.final_score()
@@ -192,6 +200,7 @@ class Game:
             self.enemy_manager.move_enemies()
             self.enemy_bullet_manager.spawn_bullets()
             self.player_bullet_manager.move_bullets()
+            self.spawning_removing_powerups()
             self.screen.update()
 
             if not self.enemy_manager.all_enemies:
