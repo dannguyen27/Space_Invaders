@@ -7,10 +7,10 @@ STARTING_MOVE_DISTANCE = 4
 MOVE_INCREMENT = 2
 
 # Initial number of rows of enemies.
-STARTING_ENEMY_AMOUNT_ROW = 1
+STARTING_ENEMY_AMOUNT_ROW = 2
 
 # Initial number of columns of enemies.
-STARTING_ENEMY_AMOUNT_COLUMN = 1
+STARTING_ENEMY_AMOUNT_COLUMN = 3
 
 # Number of rows and columns to add to the enemy grid with each level-up.
 ENEMY_INCREASE = 1
@@ -31,7 +31,7 @@ class EnemyManager:
         self.screen = Screen()
         self.screen.addshape(custom_enemy_gif)  # Register the custom enemy shape
         self.screen.addshape(LEVEL_4_ENEMY_GIF)  # Register the level 4 enemy shape
-        self.screen.addshape(LEVEL_5_ENEMY_GIF)  # Register the level 4 enemy shape
+        self.screen.addshape(LEVEL_5_ENEMY_GIF)  # Register the level 5 enemy shape
 
         self.all_enemies = []
         self.level_4_enemies = []  # List to hold level 4 specific enemies

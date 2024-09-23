@@ -4,6 +4,9 @@ import time
 custom_player_bullet = "images/resized_player_laser.gif"
 
 BULLET_MOVE_DISTANCE = 20
+POWERUP_TIME = 8
+POWERUP_SPEED = 40
+
 
 class PlayerBullet:
 
@@ -13,6 +16,7 @@ class PlayerBullet:
         self.player = player
         self.last_shot_time = 0  # Track time of the last shot
         self.shoot_cooldown = 1.25  # Seconds between shots
+        self.next_spawn_time = time.time() + POWERUP_TIME
 
         # Register the custom bullet shape
         self.screen = Screen()
@@ -34,3 +38,15 @@ class PlayerBullet:
         """Move all bullets upwards"""
         for bullet in self.all_bullets:
             bullet.sety(bullet.ycor() + self.bullet_speed)
+
+    def speed_powerup(self):
+        self.bullet_speed = POWERUP_SPEED #Increase bullet speed for powerup
+
+        def reset_speed():
+            self.bullet_speed = BULLET_MOVE_DISTANCE  # Reset bullet speed after power-up duration
+            
+            # Schedule the reset to happen after 8 seconds (8000 ms)
+            self.screen.ontimer(reset_speed, POWERUP_TIME * 1000)
+
+
+ 
